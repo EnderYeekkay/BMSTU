@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lr4</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link type = "text/css" rel = 'stylesheet' href = "style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div id="logo">
+            <h1 class = "centraltext">SCP</h1> <h3 class = "centraltext"> Foundation</h3>
+        </div>
+        <div id="shoppingcart">
+            <img id ="shoppingcart_img" src = "shopping-cart.png">
+        </div>
+    </header>
+    <div id="selected_goods">
+        <div class = "row">
+            <div class = "col">Наименование</div>
+            <div class = "col">Стоимость, 💷</div>
+            <div class = "add_to_shoppingcart" style="opacity: 0;"></div>
+        </div>
+        <div id="selected_goods_result">
+            <div id = "selected_goods_result_title">
+                <div>Стоимость:</div> 
+                <div id="selected_goods_result_cost">0</div> 
+            </div>
+            <button id = "selected_goods_result_order">Заказать</button>
+        </div>
+    </div>   
+    <div class="container">
+        <div id="enterForm">
+            <table>
+                <tr>
+                    <td><label for="name">Name: </label></td>
+                    <td><input type="text" id = "name"> <br></td>
+                </tr>
+                <tr>
+                    <td><label for="cost">Cost: </label></td>
+                    <td><input type="text" id = "cost"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"> <button id = "submit">Submit</button></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <div id = "table">
+            <div class = "row">
+                <div class = "col">Наименование</div>
+                <div class = "col">Стоимость, 💷</div>
+                <div class = "add_to_shoppingcart" style="opacity: 0;"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var sum = 0;
+        const l = console.log;
+        var calculate_cost = function() {
+            sum = 0;
+            l($('#selected_goods .col:nth-child(2n)'))
+            $('#selected_goods .col:nth-child(2n)').each((index, element) => {
+                if(index != 0)  {
+                    l(Number(element.textContent));
+                    sum += Number(element.textContent);
+                }
+            })
+            $('#selected_goods_result_cost').text(sum);
+        }
+        var is_selected_goods_visible = false;
+        document.addEventListener('DOMContentLoaded', () => {
+            $('#submit')[0].onclick = () => {
+                var name = $('#name'), cost = $('#cost')
+                const row = $('<div class = "row"></div>')
+                const col1 = $('<div class = "col"></div>').text(name.val())
+                const col2 = $('<div class = "col"></div>').text(cost.val())
+                const col3 = $('<div class = "add_to_shoppingcart"></div>')
+                const add_to_shoppingcart = $('<img class = "plus_icon" src = "plus.png">')
+                col3.append(add_to_shoppingcart);
+                col2.hover(
+                    function (eventIn) {
+                        console.log('in');
+                        $(this).css('background-color', 'aliceblue')
+                    }, 
+                    function (eventOut) {
+                        console.log('out')
+                        $(this).css('background-color', 'rgba(214, 0, 0, 0)')
+                    }
+                )
+                col3.click(
+                    function() {
+                        const lrow = $('<div class = "row"></div>')
+                        lrow.append([col1.clone(), col2.clone()])
+                        $('#selected_goods').append(lrow)
+                        calculate_cost()
+                    }
+                )
+                if(name.val() != '' && cost.val() != '') {
+                    row.append([col1, col2, col3]);
+                    $('#table').append(row);
+                    $('#name, #cost').val('');
+                } else {
+                    alert ('Введите название товара и стоимость!')
+                }
+            }
+            $('#shoppingcart').click(
+                function() {
+                    if (!is_selected_goods_visible)
+                    {
+                        $('#selected_goods').css('top', '50px')
+                    }
+                    else {
+                        $('#selected_goods').css('top', '-100%')
+                    }
+                    is_selected_goods_visible = !is_selected_goods_visible;
+                }
+            )
+        })
+    </script>
+</body>
+</html>
