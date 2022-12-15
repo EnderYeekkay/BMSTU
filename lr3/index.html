@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="element">
+            <div class="centraltext">
+                Lorem
+            </div>
+        </div>
+        <div class="element">
+            <div class="centraltext">Lorem</div>
+        </div>
+        <div class="element">
+            <div class="centraltext">Lorem</div>
+        </div>
+        <div class="element">
+            <div class="centraltext">Lorem</div>
+        </div>
+        <div class="element">
+            <div class="centraltext">Lorem</div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="element">
+            <div class="centraltext">
+                Lorem
+            </div>
+        </div>
+        <div class="element">
+            <div class="centraltext">Lorem</div>
+        </div>
+        <div class="element">
+            <div class="centraltext">Lorem</div>
+        </div>
+        <div class="element">
+            <div class="centraltext">Lorem</div>
+        </div>
+        <div class="element">
+            <div class="centraltext">Lorem</div>
+        </div>
+    </div>
+    <div id = "d">
+    </div>
+</body>
+</html>
+
+<script>
+const l = console.log;
+/**
+ * @param { HTMLElement }  elem
+ */
+function generateTree(elem) {
+    var child = elem.firstElementChild;
+    var ul = document.createElement('ul');
+    var logdata = {
+        element: elem.tagName + ' has been added!',
+        childsCount: elem.childElementCount,
+        childs: {},
+    };
+    while(child) {
+        logdata["childs"][child.tagName] = "li";
+        var li = document.createElement('li');
+        li.innerHTML = child.tagName;
+        var list = generateTree(child);
+        li.appendChild(list);
+        ul.appendChild(li);
+        child = child.nextElementSibling;
+    }
+    elem.appendChild(ul);
+    l(logdata)
+    return ul;
+}
+
+document.getElementById('d').appendChild(generateTree(document.documentElement));
+</script>

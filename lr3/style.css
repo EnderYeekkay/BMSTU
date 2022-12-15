@@ -1,0 +1,32 @@
+
+.container{
+    position: relative;
+    border: 10px outset rgb(94, 32, 32);
+    border-radius: 15px;
+    display: flex;
+    justify-content:space-around;
+    margin-bottom: 50px;
+}
+.element {
+    position: relative;
+    text-align: center;
+    width: 300px;
+    height: 150px;
+    border: 10px outset rgb(32, 94, 73);
+    border-radius: 15px;
+}
+.centraltext {
+    font-family: 'Montserrat';
+    margin-top: 75px;
+    font-size: 65px;
+    bottom: 0;
+    transform: translate(0, -50%);
+}
+#d {
+    position: relative;
+    left: 5%;
+    width: 90%;
+    border: 2px solid red;
+    border-radius: 15px;
+    background-color: aliceblue;
+}
